@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Money Manager Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --primary-light: #2d2d2d;
+            --secondary: #ff4757;
+            --secondary-light: #ff6b81;
+            --income: #2ecc71;
+            --expense: #e74c3c;
+            --light: #f5f6fa;
+            --light-gray: #dfe4ea;
+            --dark: #2f3640;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --info: #3498db;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--primary);
+            line-height: 1.6;
+        }
+        
+        .app-container {
+            max-width: 500px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background-color: white;
+            position: relative;
+            padding-bottom: 80px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .settings-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+        }
+        
+        .settings-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .settings-tabs {
+            display: flex;
+            margin-top: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .settings-tab {
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            opacity: 0.8;
+        }
+        
+        .settings-tab.active {
+            border-bottom: 3px solid var(--secondary);
+            opacity: 1;
+        }
+        
+        .settings-content {
+            padding: 20px;
+        }
+        
+        .settings-section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(255, 71, 87, 0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-light);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .category-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .category-actions i {
+            margin-left: 10px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .category-actions i:hover {
+            color: var(--secondary);
+        }
+        
+        .budget-progress {
+            height: 8px;
+            background-color: var(--light-gray);
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        .budget-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .danger-zone {
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            background-color: rgba(231, 76, 60, 0.05);
+        }
+        
+        .danger-zone-title {
+            color: var(--danger);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .danger-zone-title i {
+            margin-right: 8px;
+        }
+        
+        .danger-zone-text {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--primary);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item {
+            color: white;
+            text-align: center;
+            font-size: 12px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+        
+        .nav-item.active {
+            opacity: 1;
+        }
+        
+        .nav-item i {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .add-btn {
+            background-color: var(--secondary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -25px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .add-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        @media (max-width: 400px) {
+            .settings-tabs {
+                font-size: 12px;
+            }
+            
+            .settings-tab {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="settings-header">
+            <div class="settings-title">Settings</div>
+            <div class="settings-tabs">
+                <div class="settings-tab active" onclick="switchTab('general')">General</div>
+                <div class="settings-tab" onclick="switchTab('categories')">Categories</div>
+                <div class="settings-tab" onclick="switchTab('backup')">Backup</div>
+                <div class="settings-tab" onclick="switchTab('sms')">SMS Setup</div>
+            </div>
+        </div>
+        
+        <div class="settings-content">
+            <!-- General Settings Tab -->
+            <div id="generalTab" class="settings-tab-content">
+                <div class="settings-section">
+                    <div class="section-title">
+                        <i class="fas fa-wallet"></i> Monthly Budget
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Budget Amount</label>
+                        <input type="number" id="monthlyBudget" class="form-control" placeholder="Enter your monthly budget">
+                    </div>
+                    <div class="budget-progress">
+                        <div class="progress-bar" id="budgetProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="budget-stats">
+                        <span id="budgetUsed">₹0 used</span>
+                        <span id="budgetRemaining">₹0 remaining</span>
+                    </div>
+                    <button class="btn btn-primary btn-block" id="saveBudgetBtn">Save Budget</button>
+                </div>
+                
+                <div class="settings-section">
+                    <div class="section-title">
+                        <i class="fas fa-palette"></i> Appearance
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Theme</label>
+                        <select class="form-control" id="themeSelect">
+                            <option value="light">Light Mode</option>
+                            <option value="dark">Dark Mode</option>
+                            <option value="system">System Default</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Primary Color</label>
+                        <input type="color" id="primaryColor" class="form-control" value="#ff4757">
+                    </div>
+                    <button class="btn btn-outline btn-block" id="saveAppearanceBtn">Save Appearance Settings</button>
+                </div>
+            </div>
+            
+            <!-- Categories Settings Tab -->
+            <div id="categoriesTab" class="settings-tab-content" style="display: none;">
+                <div class="settings-section">
+                    <div class="section-title">
+                        <i class="fas fa-tags"></i> Manage Categories
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Add New Category</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="newCategory" class="form-control" placeholder="Category name">
+                            <button class="btn btn-primary" id="addCategoryBtn">Add</button>
+                        </div>
+                    </div>
+                    <ul class="category-list" id="categoryList">
+                        <!-- Categories will be loaded here -->
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Backup Settings Tab -->
+            <div id="backupTab" class="settings-tab-content" style="display: none;">
+                <div class="settings-section">
+                    <div class="section-title">
+                        <i class="fas fa-database"></i> Data Backup
+                    </div>
+                    <p style="margin-bottom: 15px; color: #666;">
+                        Backup your transaction data to a file or restore from a previous backup.
+                    </p>
+                    <button class="btn btn-primary btn-block" id="backupDataBtn">
+                        <i class="fas fa-file-export"></i> Export Backup
+                    </button>
+                    <button class="btn btn-outline btn-block" id="restoreDataBtn" style="margin-top: 10px;">
+                        <i class="fas fa-file-import"></i> Import Backup
+                    </button>
+                    <input type="file" id="backupFile" accept=".json,.csv" style="display: none;">
+                </div>
+            </div>
+            
+            <!-- SMS Settings Tab -->
+            <div id="smsTab" class="settings-tab-content" style="display: none;">
+                <div class="settings-section">
+                    <div class="section-title">
+                        <i class="fas fa-sms"></i> SMS Integration
+                    </div>
+                    <p style="margin-bottom: 15px; color: #666;">
+                        Set up automatic transaction detection from SMS messages.
+                    </p>
+                    <div class="form-group">
+                        <label class="form-label">Twilio Account SID</label>
+                        <input type="text" id="twilioSid" class="form-control" placeholder="Enter your Twilio SID">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Twilio Auth Token</label>
+                        <input type="password" id="twilioToken" class="form-control" placeholder="Enter your Twilio token">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Twilio Phone Number</label>
+                        <input type="text" id="twilioNumber" class="form-control" placeholder="+1234567890">
+                    </div>
+                    <button class="btn btn-primary btn-block" id="saveSmsSettingsBtn">Save SMS Settings</button>
+                </div>
+            </div>
+            
+            <!-- Danger Zone -->
+            <div class="danger-zone">
+                <div class="danger-zone-title">
+                    <i class="fas fa-exclamation-triangle"></i> Danger Zone
+                </div>
+                <p class="danger-zone-text">
+                    These actions are irreversible. Please proceed with caution.
+                </p>
+                <button class="btn btn-danger btn-block" id="clearDataBtn">
+                    <i class="fas fa-trash"></i> Clear All Data
+                </button>
+            </div>
+        </div>
+        
+        <div class="navbar">
+            <div class="nav-item" onclick="window.location.href='index.html'">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item" onclick="window.location.href='transactions.html'">
+                <i class="fas fa-chart-bar"></i>
+                <span>Reports</span>
+            </div>
+            <div class="nav-item add-btn" onclick="window.location.href='add-transaction.html'">
+                <i class="fas fa-plus"></i>
+            </div>
+            <div class="nav-item active" onclick="window.location.href='settings.html'">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </div>
+            <div class="nav-item" onclick="shareApp()">
+                <i class="fas fa-share-alt"></i>
+                <span>Share</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

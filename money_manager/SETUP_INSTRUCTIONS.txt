@@ -1,0 +1,43 @@
+Money Manager Web App - Setup Instructions
+
+1. PREREQUISITES:
+- Python 3.8+
+- MongoDB installed and running locally
+- Twilio account (for SMS features)
+- Node.js (optional for development)
+
+2. INSTALLATION:
+- Create and activate a virtual environment:
+  python -m venv venv
+  source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+- Install dependencies:
+  pip install -r requirements.txt
+
+3. CONFIGURATION:
+- Edit the .env file with your credentials:
+  - MONGO_URI: MongoDB connection string
+  - TWILIO_ACCOUNT_SID: From Twilio console
+  - TWILIO_AUTH_TOKEN: From Twilio console
+  - FLASK_SECRET_KEY: Any random string
+
+4. RUNNING THE APP:
+- Start the Flask server:
+  python app.py
+
+- The app will be available at:
+  http://localhost:8000
+
+5. SMS INTEGRATION:
+- Configure your Twilio number to forward SMS to:
+  http://your-ngrok-url.ngrok.io/sms
+  (Use ngrok for local testing: ngrok http 8000)
+
+6. TESTING:
+- Send an SMS to your Twilio number with format:
+  "Paid 500 for groceries" or "Received 1000 from salary"
+- The transaction should appear in the web interface
+
+7. CLEARING DATA:
+- To reset all transactions, send a POST request to:
+  http://localhost:8000/clear
